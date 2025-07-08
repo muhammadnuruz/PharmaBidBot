@@ -70,7 +70,7 @@ async def process_description(msg: types.Message, state: FSMContext):
         f'📍 <b>Местоположение:</b> <a href="{location_link}">Смотреть на карте</a>\n'
     )
 
-    cb_data = f"confirm_offer_{order_id}_{staff_id}_{quote(price)}_{quote(description)}"
+    cb_data = f"confirm_offer_{order_id}_{staff_id}_{quote(price, safe='')}_{quote(description, safe='')}"
 
     accept_offer_button = InlineKeyboardMarkup().add(
         InlineKeyboardButton(
