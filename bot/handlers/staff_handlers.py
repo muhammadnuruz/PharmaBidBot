@@ -1,3 +1,4 @@
+import UzTransliterator
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.dispatcher import FSMContext
 from aiogram import types
@@ -48,7 +49,9 @@ async def process_price(msg: types.Message, state: FSMContext):
 async def process_description(msg: types.Message, state: FSMContext):
     data = await state.get_data()
     staff_id = msg.from_user.id
-    description = msg.text
+    obj = UzTransliterator.UzTransliterator()
+    question = obj.transliterate(msg.text, from_="cyr", to="lat")
+    description = question
     price = data['price']
     order_id = int(data['order_id'])
     await msg.answer("📨 Ваше предложение отправлено клиенту!",
@@ -65,7 +68,7 @@ async def process_description(msg: types.Message, state: FSMContext):
         f"📦 <b>Новая заявка по заказу #{order.id}</b>\n"
         f"👨‍🔧 <b>От сотрудника: {msg.from_user.full_name or 'Сотрудник'}</b>\n"
         f"💰 <b>Цена: {price} сум</b>\n"
-        f"📝 <b>Комментарий: {description}</b>\n"
+        f"📝 <b>Комментарий: {msg.text}</b>\n"
         f"📞 <b>Телефон:</b> {phone_number}\n"
         f'📍 <b>Местоположение:</b> <a href="{location_link}">Смотреть на карте</a>\n'
     )

@@ -1,3 +1,4 @@
+from UzTransliterator import UzTransliterator
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
@@ -76,7 +77,9 @@ async def confirm_offer_handler(call: types.CallbackQuery):
         order_id = int(order_id)
         staff_id = int(staff_id)
         price = unquote(price_enc)
-        description = unquote(desc_enc)
+        text = unquote(desc_enc)
+        obj = UzTransliterator.UzTransliterator()
+        description = obj.transliterate(text, from_="lat", to="cyr")
 
         await update_order(order_id=order_id, staff_id=staff_id, price=price, description=description)
 
