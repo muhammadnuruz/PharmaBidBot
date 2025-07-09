@@ -1,4 +1,4 @@
-import UzTransliterator
+from UzTransliterator import UzTransliterator
 from aiogram.types import CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.dispatcher import FSMContext
 from aiogram import types
